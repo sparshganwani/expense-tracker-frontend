@@ -1,3 +1,4 @@
+import API_URL from '../config';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddExpense from './AddExpense';
@@ -7,18 +8,27 @@ import CategoryBudget from './CategoryBudget';
 function Dashboard({ user, onLogout }) {
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Fetch expenses and categories when component loads
   useEffect(() => {
-    fetchExpenses();
-    fetchCategories();
-  }, []);
+  fetchExpenses();
+  fetchCategories();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+```
+
+3. Save the file (Cmd+S)
+
+4. Push to GitHub:
+```
+git add .
+git commit -m "Fix build errors"
+git push
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/expenses/${user.id}`);
+      const response = await axios.get(`https://expense-tracker-backend-a1a8.onrender.com/api/expenses/${user.id}`);
       setExpenses(response.data);
       setLoading(false);
     } catch (error) {
@@ -29,7 +39,7 @@ function Dashboard({ user, onLogout }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/categories/${user.id}`);
+      const response = await axios.get(`https://expense-tracker-backend-a1a8.onrender.com/api/categories/${user.id}`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -38,7 +48,7 @@ function Dashboard({ user, onLogout }) {
 
   const handleAddExpense = async (expenseData) => {
     try {
-      await axios.post('http://127.0.0.1:5000/api/expenses', {
+      await axios.post('https://expense-tracker-backend-a1a8.onrender.com/api/expenses', {
         ...expenseData,
         user_id: user.id
       });
@@ -52,7 +62,7 @@ function Dashboard({ user, onLogout }) {
 
   const handleDeleteExpense = async (expenseId) => {
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/expenses/${expenseId}`);
+      await axios.delete(`https://expense-tracker-backend-a1a8.onrender.com/api/expenses/${expenseId}`);
       // Refresh expenses after deleting
       fetchExpenses();
     } catch (error) {
@@ -63,7 +73,7 @@ function Dashboard({ user, onLogout }) {
 
   const handleSetBudget = async (categoryId, budget) => {
     try {
-      await axios.put(`http://127.0.0.1:5000/api/categories/${categoryId}`, {
+      await axios.put(`https://expense-tracker-backend-a1a8.onrender.com/api/categories/${categoryId}`, {
         monthly_budget: budget
       });
       // Refresh categories after updating
