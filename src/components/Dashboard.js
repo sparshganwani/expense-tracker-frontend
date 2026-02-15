@@ -16,15 +16,6 @@ function Dashboard({ user, onLogout }) {
   fetchCategories();
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
-```
-
-3. Save the file (Cmd+S)
-
-4. Push to GitHub:
-```
-git add .
-git commit -m "Fix build errors"
-git push
 
   const fetchExpenses = async () => {
     try {
